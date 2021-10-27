@@ -2,8 +2,9 @@
 #include <M5Stack.h>
 #include <WiFi.h>
 #include <time.h>
-#include <../.env.cpp>
-
+#include <const.h>
+/* #include <pir.cpp>
+ */
 
 //Will print an error if time is not obtained and will print the time obtained if it gets it
 void printLocalTime()
@@ -68,5 +69,6 @@ void loop()
   M5.Lcd.println(WiFi.localIP());
   
   printLocalTime();
+
   
 }
