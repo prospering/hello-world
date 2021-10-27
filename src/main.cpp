@@ -2,6 +2,7 @@
 #include <M5Stack.h>
 #include <WiFi.h>
 #include <time.h>
+#include <env.cpp>
 
 
 char *ssid = "Campus2";
