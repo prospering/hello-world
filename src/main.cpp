@@ -1,40 +1,74 @@
 #include <Arduino.h>
 #include <M5Stack.h>
 #include <WiFi.h>
-#include <TimeLib.h>
+#include <time.h>
 
 
-char timeToDisplay[20];
-char* ssid = "Campus2"; 
-const char* pass = "12345678";
+char *ssid = "iPhone Xr de Valentin";
+const char *pass = "12345678";
 
+//Will print an error if time is not obtained and will print the time obtained if it gets it
+void printLocalTime()
+{
+  struct tm timeinfo;
+  if(!getLocalTime(&timeinfo)){
+    M5.Lcd.println("Failed to obtain time");
+    return;
+  }
+  M5.Lcd.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
+}
 
-void setup() {
-  // put your setup code here, to run once:
-  M5.begin();
-  M5.Power.begin();
-  M5.Lcd.fillScreen(BLACK);
-  M5.Lcd.setCursor(0,10);
-  M5.Lcd.setTextColor(WHITE);
-  M5.Lcd.setTextSize(3);
-  
+//sets up the wifi, sends an error message if the connection is established and prints the ip address if it works
+void setup_wifi()
+{
   WiFi.begin(ssid, pass);
-  while (WiFi.status() != WL_CONNECTED) {
+  while (WiFi.status() != WL_CONNECTED)
+  {
     delay(1000);
     M5.Lcd.fillScreen(BLACK);
     M5.Lcd.setCursor(0, 0);
     M5.Lcd.printf("Connecting to WiFi...");
   }
- 
-  M5.Lcd.println("Connected to the WiFi network");
 
-  
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setCursor(0, 0);
-  M5.Lcd.println("Hello World");
 
+  M5.Lcd.println("Connected to the WiFi network");
+  M5.Lcd.println(ssid);
+  M5.Lcd.println("\nAdresse IP : ");
+  M5.Lcd.println(WiFi.localIP());
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+void setup()
+{
+  // put your setup code here, to run once:
+  M5.begin(115200);
+  M5.Power.begin();
+  M5.Lcd.fillScreen(BLACK);
+  M5.Lcd.setCursor(0, 10);
+  M5.Lcd.setTextColor(WHITE);
+  M5.Lcd.setTextSize(2.5);
+
+  setup_wifi();
+
+  //init and get the time
+  configTime(3600, 3600, "fr.pool.ntp.org");
+  printLocalTime();
+}
+
+//updates the time and ip address
+void loop()
+{
+
+  delay(1000);
+  M5.Lcd.fillScreen(BLACK);
+  M5.Lcd.setCursor(0, 0);
+
+  M5.Lcd.println("Connected to the WiFi network");
+  M5.Lcd.println(ssid);
+  M5.Lcd.println("\nAdresse IP : ");
+  M5.Lcd.println(WiFi.localIP());
+  
+  printLocalTime();
+  
 }
