@@ -39,7 +39,7 @@ void setup() {
   if (httpCode > 0) {
     String content = http.getString();
     M5.Lcd.println(httpCode);
-    M5.Lcd.println(content);
+    Serial.println(content);
   }
   else {
     M5.Lcd.println("error");
@@ -47,5 +47,4 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
 }
