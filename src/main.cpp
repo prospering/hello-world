@@ -2,11 +2,8 @@
 #include <M5Stack.h>
 #include <WiFi.h>
 #include <time.h>
-#include <env.cpp>
+#include <../.env.cpp>
 
-
-char *ssid = "Campus2";
-const char *pass = "12345678";
 
 //Will print an error if time is not obtained and will print the time obtained if it gets it
 void printLocalTime()
@@ -53,7 +50,7 @@ void setup()
   setup_wifi();
 
   //init and get the time
-  configTime(3600, 3600, "fr.pool.ntp.org");
+  configTime(3600, 3600, ntpServer);
   printLocalTime();
 }
 
