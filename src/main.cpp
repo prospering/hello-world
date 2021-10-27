@@ -4,7 +4,7 @@
 #include <time.h>
 
 
-char *ssid = "iPhone Xr de Valentin";
+char *ssid = "Campus2";
 const char *pass = "12345678";
 
 //Will print an error if time is not obtained and will print the time obtained if it gets it
