@@ -2,11 +2,13 @@
 #include <M5Stack.h>
 #include <WiFi.h>
 #include <time.h>
-#include <pir.h>
-#include <co2.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
-#include <const.local.h>
+
+#include "pir.h"
+#include "co2.h"
+#include "const.local.h"
+#include "printMsg.h"
 
 StaticJsonDocument<256> doc;
 StaticJsonDocument<256> dataDoc;
@@ -34,7 +36,7 @@ void printLocalTime()
 //sets up the wifi, sends an error message if the connection is established and prints the ip address if it works
 void setup_wifi()
 {
-  WiFi.begin(ssid, pass);
+  WiFi.begin(SSID, PASS);
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(1000);
@@ -47,7 +49,7 @@ void setup_wifi()
   M5.Lcd.setCursor(0, 0);
 
   M5.Lcd.println("Connected to the WiFi network");
-  M5.Lcd.println(ssid);
+  M5.Lcd.println(SSID);
   M5.Lcd.println("\nAdresse IP : ");
   M5.Lcd.println(WiFi.localIP());
 }
@@ -68,32 +70,28 @@ String generateLogJson(String id, String type, String val, int timestamp, String
   return payload;
 }
 
-void printMsg(String msg) {
-  M5.Lcd.println(msg);
-  Serial.println(msg);
-}
-
 void beginConnect(HTTPClient &http, String url = "https://api.bagtower.bag-era.fr/prod/logs") {
   http.begin(url);
   http.addHeader("Content-type", "application/json");
-  http.addHeader("x-api-key", x_api_key);
+  http.addHeader("x-api-key", X_API_KEY);
 }
 
 void setup() {
   setupM5();
   setup_wifi();
   //init and get the time
-  configTime(3600, 3600, ntpServer);
+  configTime(3600, 3600, NTP_SERVER);
   printLocalTime();
   HTTPClient http;
   beginConnect(http);
-  String payload = generateLogJson("title", "string", "value", 0, "now", deviceId);
+  String payload = generateLogJson("title", "string", "value", 0, "now", DEVICE_ID);
   // printMsg(payload);
   int httpCode = http.POST(payload);
   Serial.printf("%d: %s", httpCode, http.getString().c_str());
 
   co2_sensor_setup();
   pir_sensor_setup();
+
   if (httpCode >= 200 && httpCode < 300) {
     String content = http.getString();
     printMsg(content);
@@ -109,7 +107,7 @@ void loop() {
   M5.Lcd.setCursor(0, 0);
 
   M5.Lcd.println("Connected to the WiFi network");
-  M5.Lcd.println(ssid);
+  M5.Lcd.println(SSID);
   M5.Lcd.println("\nAdresse IP : ");
   M5.Lcd.println(WiFi.localIP());
   
