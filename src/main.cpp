@@ -2,6 +2,7 @@
 #include <M5Stack.h>
 #include <WiFi.h>
 #include <time.h>
+#include <pir.h>
 #include <co2.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
