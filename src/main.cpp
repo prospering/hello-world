@@ -76,7 +76,7 @@ void printMsg(String msg) {
 void beginConnect(HTTPClient &http, String url = "https://api.bagtower.bag-era.fr/prod/logs") {
   http.begin(url);
   http.addHeader("Content-type", "application/json");
-  http.addHeader("x-api-key", "cHqVZbl1sA248m3bg21uF7AhZqMvySeJ447BDXKe");
+  http.addHeader("x-api-key", x_api_key);
 }
 
 void setup() {
@@ -87,7 +87,7 @@ void setup() {
   printLocalTime();
   HTTPClient http;
   beginConnect(http);
-  String payload = generateLogJson("title", "string", "value", 0, "now", "6f34c9b0-1791-1:69e1c3d0-365b-11ec-b");
+  String payload = generateLogJson("title", "string", "value", 0, "now", deviceId);
   // printMsg(payload);
   int httpCode = http.POST(payload);
   Serial.printf("%d: %s", httpCode, http.getString().c_str());
