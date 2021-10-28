@@ -2,8 +2,9 @@
 #include <M5Stack.h>
 #include <WiFi.h>
 #include <time.h>
-#include <const.h>
+#include <const.local.h>
 #include <co2.h>
+#include <pir.h>
 
 //Will print an error if time is not obtained and will print the time obtained if it gets it
 void printLocalTime()
