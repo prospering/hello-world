@@ -63,6 +63,7 @@ void setup()
   M5.Lcd.setCursor(0, 0);
 
   co2_sensor_setup();
+  pir_sensor_setup();
 }
 
 //updates the time and ip address
@@ -77,6 +78,7 @@ void loop()
 
   //print sensor infos
   co2_sensor_init();
+  pir_sensor_init();
 
   
   

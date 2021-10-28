@@ -35,6 +35,7 @@ void co2_sensor_setup() {
 void co2_sensor_init() {
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setCursor(0, 0);
+
   while(i > 0) {    
     if(millis()- last_millis > 1000) {
       last_millis = millis();
