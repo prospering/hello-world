@@ -3,6 +3,7 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
+#include <const.local.h>
 StaticJsonDocument<256> doc;
 StaticJsonDocument<256> dataDoc;
 
@@ -11,7 +12,7 @@ void setup() {
   M5.begin(115200);
   M5.Power.begin();
   M5.Lcd.textsize = 2;
-  WiFi.begin("Campus2", "12345678");
+  WiFi.begin(ssid, pass);
   M5.Lcd.println("connecting...");
   while (WiFi.status() != WL_CONNECTED) {
     delay(1);
