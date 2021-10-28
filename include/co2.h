@@ -3,6 +3,7 @@
 
 #include <M5Stack.h>
 #include "Adafruit_SGP30.h"
+#include "printMsg.h"
 
 Adafruit_SGP30 sgp;
 int i = 15;
@@ -21,15 +22,15 @@ void co2_sensor_setup() {
   /* header_SPG30("SGP30 TEST"); */
   M5.Lcd.println("SGP30 test");
   if (! sgp.begin()){
-    M5.Lcd.println("Sensor not found :'(");
+    printMsg("Sensor not found :'(");
     while (1);
   }
   
-  M5.Lcd.print("Found SGP30 serial #");
+  printMsg("Found SGP30 serial #");
   M5.Lcd.print(sgp.serialnumber[0], HEX);
   M5.Lcd.print(sgp.serialnumber[1], HEX);
   M5.Lcd.println(sgp.serialnumber[2], HEX);
-  M5.Lcd.println("Initialization...");
+  printMsg("Initialization...");
 }
 
 void co2_sensor_init() {
@@ -51,16 +52,16 @@ void co2_sensor_init() {
   if (! sgp.IAQmeasure()) {
     M5.Lcd.fillScreen(BLACK);
     M5.Lcd.setCursor(0, 0);
-    M5.Lcd.println("Measurement failed");
+    printMsg("Measurement failed");
     return;
   }
 
-  M5.Lcd.println("CO2 captor:");
+  printMsg("CO2 captor:");
 
   M5.Lcd.print("\n- TVOC "); 
   M5.Lcd.print(sgp.TVOC); 
   M5.Lcd.print(" ppb\t");
-  M5.Lcd.print("\n- eCO2 "); 
+  printMsg("\n- eCO2 "); 
   M5.Lcd.print(sgp.eCO2); 
   M5.Lcd.println(" ppm");
  

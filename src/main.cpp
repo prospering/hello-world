@@ -7,6 +7,7 @@
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 #include <const.local.h>
+#include "printMsg.h"
 
 StaticJsonDocument<256> doc;
 StaticJsonDocument<256> dataDoc;
@@ -68,11 +69,6 @@ String generateLogJson(String id, String type, String val, int timestamp, String
   return payload;
 }
 
-void printMsg(String msg) {
-  M5.Lcd.println(msg);
-  Serial.println(msg);
-}
-
 void beginConnect(HTTPClient &http, String url = "https://api.bagtower.bag-era.fr/prod/logs") {
   http.begin(url);
   http.addHeader("Content-type", "application/json");
@@ -106,14 +102,14 @@ void loop() {
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setCursor(0, 0);
 
-  M5.Lcd.println("Connected to the WiFi network");
-  M5.Lcd.println(ssid);
-  M5.Lcd.println("\nAdresse IP : ");
+  printMsg("Connected to the WiFi network");
+  printMsg(ssid);
+  printMsg("\nAdresse IP : ");
   M5.Lcd.println(WiFi.localIP());
   
   printLocalTime();
 
-  delay(1000);
+  //delay(1000);
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setCursor(0, 0);
 
