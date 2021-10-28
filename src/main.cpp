@@ -4,14 +4,10 @@
 #include <time.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
-<<<<<<< HEAD
-#include <const.local.h>
-=======
 
 #include "pir.h"
 #include "co2.h"
 #include "const.local.h"
->>>>>>> restructuration/addition_cpp_to_h_files
 #include "printMsg.h"
 
 StaticJsonDocument<256> doc;
@@ -110,15 +106,9 @@ void loop() {
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setCursor(0, 0);
 
-<<<<<<< HEAD
-  printMsg("Connected to the WiFi network");
-  printMsg(ssid);
-  printMsg("\nAdresse IP : ");
-=======
   M5.Lcd.println("Connected to the WiFi network");
   M5.Lcd.println(SSID);
   M5.Lcd.println("\nAdresse IP : ");
->>>>>>> restructuration/addition_cpp_to_h_files
   M5.Lcd.println(WiFi.localIP());
   
   printLocalTime();
