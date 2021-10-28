@@ -58,3 +58,11 @@ void co2_sensor_init() {
  
   delay(1000);
 }
+
+int getTVOC() {
+  return sgp.TVOC;
+}
+
+int getECO2() {
+  return sgp.eCO2;
+}

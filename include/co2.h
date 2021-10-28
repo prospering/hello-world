@@ -5,3 +5,7 @@
 void co2_sensor_setup();
 
 void co2_sensor_init();
+
+int getTVOC();
+
+int getECO2();

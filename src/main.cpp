@@ -79,15 +79,13 @@ void beginConnect(HTTPClient &http, String url = "https://api.bagtower.bag-era.f
 void setup() {
   setupM5();
   setup_wifi();
-  //init and get the time
   configTime(3600, 3600, NTP_SERVER);
   printLocalTime();
   HTTPClient http;
   beginConnect(http);
   String payload = generateLogJson("title", "string", "value", 0, "now", DEVICE_ID);
-  // printMsg(payload);
+  printMsg(payload);
   int httpCode = http.POST(payload);
-  Serial.printf("%d: %s", httpCode, http.getString().c_str());
 
   co2_sensor_setup();
   pir_sensor_setup();
@@ -118,6 +116,7 @@ void loop() {
   M5.Lcd.setCursor(0, 0);
 
   co2_sensor_init();
+  int eCO2 = getECO2();
+  int TVOC = getTVOC();
   pir_sensor_init();
-
 }
