@@ -85,9 +85,7 @@ void setup() {
   HTTPClient http;
   beginConnect(http);
   String payload = generateLogJson("title", "string", "value", 0, "now", DEVICE_ID);
-  // printMsg(payload);
   int httpCode = http.POST(payload);
-  // Serial.printf("%d: %s", httpCode, http.getString().c_str());
 
   co2_sensor_setup();
   pir_sensor_setup();
