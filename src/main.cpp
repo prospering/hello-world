@@ -92,6 +92,8 @@ void setup() {
   int httpCode = http.POST(payload);
   Serial.printf("%d: %s", httpCode, http.getString().c_str());
 
+  co2_sensor_setup();
+  pir_sensor_setup();
   if (httpCode >= 200 && httpCode < 300) {
     String content = http.getString();
     printMsg(content);
@@ -117,7 +119,7 @@ void loop() {
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setCursor(0, 0);
 
-  co2_sensor_setup();
+  co2_sensor_init();
   pir_sensor_init();
 
 }
