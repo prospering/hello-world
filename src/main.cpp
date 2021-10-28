@@ -88,7 +88,7 @@ void setup() {
   HTTPClient http;
   beginConnect(http);
   String payload = generateLogJson("title", "string", "value", 0, "now", "6f34c9b0-1791-1:69e1c3d0-365b-11ec-b");
-  printMsg(payload);
+  // printMsg(payload);
   int httpCode = http.POST(payload);
   Serial.printf("%d: %s", httpCode, http.getString().c_str());
 
@@ -118,5 +118,6 @@ void loop() {
   M5.Lcd.setCursor(0, 0);
 
   co2_sensor_setup();
+  pir_sensor_init();
 
 }
