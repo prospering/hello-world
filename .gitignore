@@ -5,3 +5,7 @@
 .vscode/launch.json
 .vscode/ipch
 include/const.h
+<<<<<<< HEAD
+=======
+.env.cpp
+>>>>>>> cd66d099b22030ac2ff1128421a932aa012b5020
