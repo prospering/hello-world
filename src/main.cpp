@@ -14,8 +14,10 @@ StaticJsonDocument<256> dataDoc;
 
 
 void setupM5() {
-  M5.begin(115200);
-  M5.Power.begin();
+  M5.begin();
+  // M5.begin(115200);
+  // Serial.begin(115200);
+  // M5.Power.begin();
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setCursor(0, 10);
   M5.Lcd.setTextColor(WHITE);
@@ -77,16 +79,22 @@ void beginConnect(HTTPClient &http, String url = "https://api.bagtower.bag-era.f
 
 void setup() {
   setupM5();
+  pir_sensor_setup();
+  co2_sensor_setup();
+  printMsg("Sensors setup completed");
   setup_wifi();
+    printMsg("wifi setup completed");
+
   //init and get the time
   configTime(3600, 3600, ntpServer);
   printLocalTime();
   HTTPClient http;
   beginConnect(http);
   String payload = generateLogJson("title", "string", "value", 0, "now", "6f34c9b0-1791-1:69e1c3d0-365b-11ec-b");
-  // printMsg(payload);
   int httpCode = http.POST(payload);
-  Serial.printf("%d: %s", httpCode, http.getString().c_str());
+    Serial.printf("%d", httpCode);
+
+  // Serial.printf("%d: %s", httpCode, http.getString().c_str());
 
   if (httpCode >= 200 && httpCode < 300) {
     String content = http.getString();
@@ -95,25 +103,28 @@ void setup() {
   else {
     printMsg("error");
   };
+  //Serial.flush();
+  Serial.print("setup done");
+
 }
 
 void loop() {
+  M5.update();
   delay(1000);
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setCursor(0, 0);
 
-  printMsg("Connected to the WiFi network");
+  // printMsg("Connected to the WiFi network");
   printMsg(ssid);
-  printMsg("\nAdresse IP : ");
+  // printMsg("\nAdresse IP : ");
   M5.Lcd.println(WiFi.localIP());
-  
   printLocalTime();
 
-  //delay(1000);
+  delay(1000);
+  
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setCursor(0, 0);
-
-  co2_sensor_setup();
+  co2_sensor_init();
   pir_sensor_init();
 
 }
