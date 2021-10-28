@@ -101,19 +101,19 @@ void setup() {
 
 void loop() {
   delay(1000);
-  M5.Lcd.fillScreen(BLACK);
-  M5.Lcd.setCursor(0, 0);
+  // M5.Lcd.fillScreen(BLACK);
+  // M5.Lcd.setCursor(0, 0);
 
-  M5.Lcd.println("Connected to the WiFi network");
-  M5.Lcd.println(SSID);
-  M5.Lcd.println("\nAdresse IP : ");
-  M5.Lcd.println(WiFi.localIP());
+  // M5.Lcd.println("Connected to the WiFi network");
+  // M5.Lcd.println(SSID);
+  // M5.Lcd.println("\nAdresse IP : ");
+  // M5.Lcd.println(WiFi.localIP());
   
   printLocalTime();
 
-  //delay(1000);
-  M5.Lcd.fillScreen(BLACK);
-  M5.Lcd.setCursor(0, 0);
+  delay(1000);
+  // M5.Lcd.fillScreen(BLACK);
+  // M5.Lcd.setCursor(0, 0);
 
   co2_sensor_init();
   int eCO2 = getECO2();
