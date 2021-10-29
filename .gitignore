@@ -4,4 +4,9 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch
+<<<<<<< HEAD
 include/const.h
+=======
+include/const.h
+
+>>>>>>> develop
