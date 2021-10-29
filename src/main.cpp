@@ -24,34 +24,20 @@ void setupM5() {
   M5.Lcd.setTextSize(2.5);
 }
 
+void playNote(float freq, float ms) {
+  M5.Speaker.tone(freq, ms);
+  delay(freq);
+  M5.Speaker.end();
+}
+
 void playRickRoll() {
-  M5.Speaker.tone(146.83,200);
-  delay(200);
-  M5.Speaker.end();
-  
-  M5.Speaker.tone(146.83,200);
-  delay(200);
-  M5.Speaker.end();
-
-  M5.Speaker.tone(164.81,200);
-  delay(200);
-  M5.Speaker.end();
-
-  M5.Speaker.tone(174.61,200);
-  delay(200);
-  M5.Speaker.end();
-
-  M5.Speaker.tone(146.83,200);
-  delay(200);
-  M5.Speaker.end();
-
-  M5.Speaker.tone(174.61,200);
-  delay(200);
-  M5.Speaker.end();
-
-  M5.Speaker.tone(196.00,200);
-  delay(200);
-  M5.Speaker.end();
+  playNote(146.83,200);
+  playNote(146.83,200);
+  playNote(164.81,200);
+  playNote(174.61,200);
+  playNote(146.83,300);
+  playNote(174.61,300);
+  playNote(196.00,300);
 }
 
 void printLocalTime()
