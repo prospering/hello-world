@@ -35,7 +35,6 @@ void loop() {
   M5.Lcd.fillRect(10, 80, 100, 34, BLACK);
   printLocalTime();
 
-
   co2_sensor_init();
   pir_sensor_init();
 

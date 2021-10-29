@@ -9,8 +9,8 @@
 */
 
 //Device id and api key for BAG Tower
-#define X_API_KEY "CifhSACFQeaS21CNsLMjO3WQ1GjEucyT5ytQXez0"
-#define DEVICE_ID "6f34c9b0-1791-1:69e1c3d0-365b-11ec-b"
+#define X_API_KEY "i265LU6FHY7RgRXwbAXKJ5MKODhLKvVlF8q29Wv5"
+#define DEVICE_ID "6f34c9b0-1791-1:d425bb60-3657-11ec-9"
 
 //WiFi connection info
 #define SSID "Campus2"
