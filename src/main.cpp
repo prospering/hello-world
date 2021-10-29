@@ -7,12 +7,12 @@
 
 #include "pir.h"
 #include "co2.h"
-#include "const.h"
+#include "const.local.h"
 #include "printMsg.h"
 
 StaticJsonDocument<256> doc;
 StaticJsonDocument<256> dataDoc;
-struct tm timeinfo;
+
 
 time_t getTimestamp() {
   time_t timestamp;
@@ -22,20 +22,50 @@ time_t getTimestamp() {
 void setupM5() {
   M5.begin(115200);
   M5.Power.begin();
+  M5.Speaker.begin();
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setCursor(0, 10);
   M5.Lcd.setTextColor(WHITE);
   M5.Lcd.setTextSize(2.5);
 }
 
+void playNote(float freq, float ms, float delayNextNote = 0) {
+  M5.Speaker.tone(freq, ms);
+  delay(freq);
+  M5.Speaker.end();
+  delay(delayNextNote);
+}
+
+void playRickRoll() {
+  playNote(207.65,100);
+  playNote(233.08,100);
+  playNote(277.18,100);
+  playNote(233.08,100);
+  playNote(349.23,250,150);
+  playNote(349.23,250,150);
+  playNote(311.13,400);
+
+  delay(400);
+
+  playNote(207.65,100);
+  playNote(233.08,100);
+  playNote(277.18,100);
+  playNote(233.08,100);
+  playNote(311.13,250,150);
+  playNote(311.13,250,150);
+  playNote(277.18,400);
+  delay(400);
+  playNote(261.63,100);
+  playNote(233.08,100);
+}
+
 void printLocalTime()
 {
-  /* struct tm timeinfo; */
+  struct tm timeinfo;
   if(!getLocalTime(&timeinfo)){
     M5.Lcd.println("Failed to obtain time");
     return;
   }
-
   M5.Lcd.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
 }
 
@@ -97,18 +127,43 @@ void send_data_to_API(String payload){
   };
 }
 
+void setupScreenDisplay() {
+  M5.Lcd.fillScreen(BLACK);
+  M5.Lcd.setCursor(0, 0);
+  long last_millis = 0;
+  for(int i = 15; i>0; i--) {    
+    if(millis()- last_millis > 1000) {
+      last_millis = millis();
+      i--;
+      M5.Lcd.fillScreen(BLACK);
+      M5.Lcd.setCursor(0, 0);
+      M5.Lcd.println(i);
+    }
+  }
+  M5.Lcd.fillScreen(BLACK);
+  M5.Lcd.println("CO2 captor:");
+  M5.Lcd.print("\n- TVOC  "); 
+  M5.Lcd.println("\n- eCO2  "); 
+}
+
 void setup() {
   setupM5();
   setup_wifi();
   configTime(3600, 3600, NTP_SERVER);
+  printLocalTime();
 
   co2_sensor_setup();
   pir_sensor_setup();
 
+  setupScreenDisplay();
 }
 
 void loop() {
-  delay(1000);
+  Serial.println("eho");
+
+  M5.Lcd.setCursor(10, 80);
+  M5.Lcd.fillRect(10, 80, 100, 34, BLACK);
+  printLocalTime();
 
 
   co2_sensor_init();
@@ -124,7 +179,4 @@ void loop() {
   send_data_to_API(payload_TVOC);
 
   delay(100000);
-
-  
-
 }
