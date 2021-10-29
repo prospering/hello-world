@@ -27,7 +27,9 @@ void playRickRoll() {
    playNote(311.13,250,150);
    playNote(311.13,250,150);
    playNote(277.18,400);
+
    delay(150);
+   
    playNote(261.63,50);
    playNote(233.08,50);
 
@@ -36,7 +38,9 @@ void playRickRoll() {
    playNote(207.65,100);
    playNote(233.08,100);
    playNote(277.18,100);
+
    delay(100);
+
    playNote(277.18,400);
    playNote(311.13,100);
    playNote(261.63,100);
