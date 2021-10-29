@@ -129,7 +129,6 @@ void setupScreenDisplay() {
 void setup() {
   setupM5();
   setup_wifi();
-  playRickRoll();
   configTime(3600, 3600, NTP_SERVER);
   printLocalTime();
   HTTPClient http;
