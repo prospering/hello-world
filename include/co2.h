@@ -4,7 +4,7 @@
 
 void co2_sensor_setup();
 
-void co2_sensor_init();
+void co2_sensor_print_data();
 
 int getTVOC();
 

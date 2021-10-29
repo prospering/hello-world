@@ -3,6 +3,5 @@
 
 
 void printMsg(String msg) {
-  M5.Lcd.println(msg);
   Serial.println(msg);
 }
