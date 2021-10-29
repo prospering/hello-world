@@ -13,8 +13,8 @@
 #define DEVICE_ID "6f34c9b0-1791-1:d425bb60-3657-11ec-9"
 
 //WiFi connection info
-#define SSID "iPhone de bapti"
-#define PASS "0633447891"
+#define SSID "Campus2"
+#define PASS "12345678"
 
 //ntp server
 #define NTP_SERVER "fr.pool.ntp.org"
