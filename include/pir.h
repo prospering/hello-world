@@ -4,4 +4,4 @@
 
 void pir_sensor_setup();
 
-void pir_sensor_init();
+void pir_sensor_print_data();

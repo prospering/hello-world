@@ -20,7 +20,7 @@ void co2_sensor_setup() {
   M5.Lcd.println("Initialization...");
 }
 
-void co2_sensor_init() {
+void co2_sensor_print_data() {
   if (! sgp.IAQmeasure()) {
     M5.Lcd.fillScreen(BLACK);
     M5.Lcd.setCursor(0, 0);

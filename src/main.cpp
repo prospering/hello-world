@@ -35,8 +35,8 @@ void loop() {
   M5.Lcd.fillRect(10, 80, 100, 34, BLACK);
   printLocalTime();
 
-  co2_sensor_init();
-  pir_sensor_init();
+  co2_sensor_print_data();
+  pir_sensor_print_data();
 
   int eCO2 = getECO2();
   String payload_CO2 = generateLogJson("Co2 sensor - eCO2", "number", eCO2, getTimestamp(), "now", DEVICE_ID);

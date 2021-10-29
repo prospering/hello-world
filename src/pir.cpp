@@ -12,7 +12,7 @@ void pir_sensor_setup() {
   pinMode(36, INPUT); //Set pin 22 to input mode.  
 }
 
-void pir_sensor_init() {
+void pir_sensor_print_data() {
   // Pas besoin de mettre un fond d'écran noir lorsque l'on combine les capteurs (le co2 initialise déjà un fond)
   // M5.Lcd.fillRect(90,25,180,50,BLACK);  //Draw a black rectangle 180 by 50 at (90,25). 
   M5.Lcd.fillRect(0,130,140,18,BLACK);
