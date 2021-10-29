@@ -7,12 +7,17 @@
 
 #include "pir.h"
 #include "co2.h"
-#include "const.local.h"
+#include "const.h"
 #include "printMsg.h"
 
 StaticJsonDocument<256> doc;
 StaticJsonDocument<256> dataDoc;
+struct tm timeinfo;
 
+time_t getTimestamp() {
+  time_t timestamp;
+  return time(&timestamp);
+}
 
 void setupM5() {
   M5.begin(115200);
@@ -25,11 +30,12 @@ void setupM5() {
 
 void printLocalTime()
 {
-  struct tm timeinfo;
+  /* struct tm timeinfo; */
   if(!getLocalTime(&timeinfo)){
     M5.Lcd.println("Failed to obtain time");
     return;
   }
+
   M5.Lcd.println(&timeinfo, "%A, %B %d %Y %H:%M:%S");
 }
 
@@ -54,7 +60,7 @@ void setup_wifi()
   M5.Lcd.println(WiFi.localIP());
 }
 
-String generateLogJson(String id, String type, String val, int timestamp, String UTCTimestamp, String deviceId) {
+String generateLogJson(String id, String type, int val, int timestamp, String UTCTimestamp, String deviceId) {
   JsonObject root = doc.to<JsonObject>();
   JsonObject data = dataDoc.to<JsonObject>();
   data["id"] = id;
@@ -76,20 +82,12 @@ void beginConnect(HTTPClient &http, String url = "https://api.bagtower.bag-era.f
   http.addHeader("x-api-key", X_API_KEY);
 }
 
-void setup() {
-  setupM5();
-  setup_wifi();
-  configTime(3600, 3600, NTP_SERVER);
-  printLocalTime();
+void send_data_to_API(String payload){
   HTTPClient http;
   beginConnect(http);
-  String payload = generateLogJson("title", "string", "value", 0, "now", DEVICE_ID);
-  printMsg(payload);
   int httpCode = http.POST(payload);
-
-  co2_sensor_setup();
-  pir_sensor_setup();
-
+  Serial.println("httpcode");
+  Serial.println(httpCode);
   if (httpCode >= 200 && httpCode < 300) {
     String content = http.getString();
     printMsg(content);
@@ -99,26 +97,34 @@ void setup() {
   };
 }
 
+void setup() {
+  setupM5();
+  setup_wifi();
+  configTime(3600, 3600, NTP_SERVER);
+
+  co2_sensor_setup();
+  pir_sensor_setup();
+
+}
+
 void loop() {
   delay(1000);
-  // M5.Lcd.fillScreen(BLACK);
-  // M5.Lcd.setCursor(0, 0);
 
-  // M5.Lcd.println("Connected to the WiFi network");
-  // M5.Lcd.println(SSID);
-  // M5.Lcd.println("\nAdresse IP : ");
-  // M5.Lcd.println(WiFi.localIP());
-  
-  printLocalTime();
-
-  delay(1000);
-  // M5.Lcd.fillScreen(BLACK);
-  // M5.Lcd.setCursor(0, 0);
 
   co2_sensor_init();
-  int eCO2 = getECO2();
-  Serial.println(eCO2);
-  int TVOC = getTVOC();
-  Serial.println(TVOC);
   pir_sensor_init();
+
+  int eCO2 = getECO2();
+  String payload_CO2 = generateLogJson("Co2 sensor - eCO2", "number", eCO2, getTimestamp(), "now", DEVICE_ID);
+  Serial.println(payload_CO2);
+  send_data_to_API(payload_CO2);
+  
+  int TVOC = getTVOC();
+  String payload_TVOC = generateLogJson("Co2 sensor - TVOC", "number", TVOC, getTimestamp(), "now", DEVICE_ID);
+  send_data_to_API(payload_TVOC);
+
+  delay(100000);
+
+  
+
 }
