@@ -31,28 +31,43 @@ void playNote(float freq, float ms, float delayNextNote = 0) {
   delay(delayNextNote);
 }
 
-void playRickRoll() {
-  playNote(207.65,100);
-  playNote(233.08,100);
-  playNote(277.18,100);
-  playNote(233.08,100);
-  playNote(349.23,250,150);
-  playNote(349.23,250,150);
-  playNote(311.13,400);
+// void playRickRoll() {
+//   playNote(207.65,100);
+//   playNote(233.08,100);
+//   playNote(277.18,100);
+//   playNote(233.08,100);
+//   playNote(349.23,250,150);
+//   playNote(349.23,250,150);
+//   playNote(311.13,400);
 
-  delay(400);
+//   delay(400);
 
-  playNote(207.65,100);
-  playNote(233.08,100);
-  playNote(277.18,100);
-  playNote(233.08,100);
-  playNote(311.13,250,150);
-  playNote(311.13,250,150);
-  playNote(277.18,400);
-  delay(400);
-  playNote(261.63,100);
-  playNote(233.08,100);
-}
+//   playNote(207.65,100);
+//   playNote(233.08,100);
+//   playNote(277.18,100);
+//   playNote(233.08,100);
+//   playNote(311.13,250,150);
+//   playNote(311.13,250,150);
+//   playNote(277.18,400);
+//   delay(150);
+//   playNote(261.63,50);
+//   playNote(233.08,50);
+
+//   delay(150);
+
+//   playNote(207.65,100);
+//   playNote(233.08,100);
+//   playNote(277.18,100);
+//   delay(100);
+//   playNote(277.18,400);
+//   playNote(311.13,100);
+//   playNote(261.63,100);
+//   playNote(233.08,50);
+//   playNote(207.65,50);
+  
+
+  
+// }
 
 void printLocalTime()
 {
@@ -129,7 +144,7 @@ void setupScreenDisplay() {
 void setup() {
   setupM5();
   setup_wifi();
-  playRickRoll();
+  // playRickRoll();
   configTime(3600, 3600, NTP_SERVER);
   printLocalTime();
   HTTPClient http;
