@@ -17,10 +17,41 @@ StaticJsonDocument<256> dataDoc;
 void setupM5() {
   M5.begin(115200);
   M5.Power.begin();
+  M5.Speaker.begin();
   M5.Lcd.fillScreen(BLACK);
   M5.Lcd.setCursor(0, 10);
   M5.Lcd.setTextColor(WHITE);
   M5.Lcd.setTextSize(2.5);
+}
+
+void playRickRoll() {
+  M5.Speaker.tone(146.83,200);
+  delay(200);
+  M5.Speaker.end();
+  
+  M5.Speaker.tone(146.83,200);
+  delay(200);
+  M5.Speaker.end();
+
+  M5.Speaker.tone(164.81,200);
+  delay(200);
+  M5.Speaker.end();
+
+  M5.Speaker.tone(174.61,200);
+  delay(200);
+  M5.Speaker.end();
+
+  M5.Speaker.tone(146.83,200);
+  delay(200);
+  M5.Speaker.end();
+
+  M5.Speaker.tone(174.61,200);
+  delay(200);
+  M5.Speaker.end();
+
+  M5.Speaker.tone(196.00,200);
+  delay(200);
+  M5.Speaker.end();
 }
 
 void printLocalTime()
@@ -76,18 +107,36 @@ void beginConnect(HTTPClient &http, String url = "https://api.bagtower.bag-era.f
   http.addHeader("x-api-key", X_API_KEY);
 }
 
+void setupScreenDisplay() {
+  M5.Lcd.fillScreen(BLACK);
+  M5.Lcd.setCursor(0, 0);
+  long last_millis = 0;
+  for(int i = 15; i>0; i--) {    
+    if(millis()- last_millis > 1000) {
+      last_millis = millis();
+      i--;
+      M5.Lcd.fillScreen(BLACK);
+      M5.Lcd.setCursor(0, 0);
+      M5.Lcd.println(i);
+    }
+  }
+  M5.Lcd.fillScreen(BLACK);
+  M5.Lcd.println("CO2 captor:");
+  M5.Lcd.print("\n- TVOC  "); 
+  M5.Lcd.println("\n- eCO2  "); 
+}
+
 void setup() {
   setupM5();
   setup_wifi();
-  //init and get the time
+  playRickRoll();
   configTime(3600, 3600, NTP_SERVER);
   printLocalTime();
   HTTPClient http;
   beginConnect(http);
   String payload = generateLogJson("title", "string", "value", 0, "now", DEVICE_ID);
-  // printMsg(payload);
+  printMsg(payload);
   int httpCode = http.POST(payload);
-  // Serial.printf("%d: %s", httpCode, http.getString().c_str());
 
   co2_sensor_setup();
   pir_sensor_setup();
@@ -99,10 +148,11 @@ void setup() {
   else {
     printMsg("error");
   };
+  setupScreenDisplay();
 }
 
 void loop() {
-  delay(1000);
+  Serial.println("eho");
   // M5.Lcd.fillScreen(BLACK);
   // M5.Lcd.setCursor(0, 0);
 
@@ -110,14 +160,13 @@ void loop() {
   // M5.Lcd.println(SSID);
   // M5.Lcd.println("\nAdresse IP : ");
   // M5.Lcd.println(WiFi.localIP());
-  
+  M5.Lcd.setCursor(10, 80);
+  M5.Lcd.fillRect(10, 80, 100, 34, BLACK);
   printLocalTime();
-
-  delay(1000);
   // M5.Lcd.fillScreen(BLACK);
   // M5.Lcd.setCursor(0, 0);
 
   co2_sensor_init();
   pir_sensor_init();
-
+  delay(1000);
 }
