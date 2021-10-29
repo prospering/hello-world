@@ -55,6 +55,8 @@ void co2_sensor_init() {
   M5.Lcd.print("\n- eCO2 "); 
   M5.Lcd.print(sgp.eCO2); 
   M5.Lcd.println(" ppm");
+
+  Serial.println(sgp.TVOC);
  
   delay(1000);
 }

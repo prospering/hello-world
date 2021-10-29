@@ -117,6 +117,8 @@ void loop() {
 
   co2_sensor_init();
   int eCO2 = getECO2();
+  Serial.println(eCO2);
   int TVOC = getTVOC();
+  Serial.println(TVOC);
   pir_sensor_init();
 }
