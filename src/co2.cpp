@@ -34,7 +34,7 @@ void co2_sensor_print_data() {
   M5.Lcd.setCursor(75, 64);
   M5.Lcd.print(sgp.eCO2);
   M5.Lcd.print("  ppm");
-}
+} 
 
 int getTVOC() {
   return sgp.TVOC;
